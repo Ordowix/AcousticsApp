@@ -1,0 +1,68 @@
+<html>
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="main.js" type="text/javascript"></script>
+	<link href="main.css" type="css/javascript"></link>
+</head>
+
+<body>
+	<video id="game-video"></video>
+	<input id="video-src" class="src-input"></input>
+	<button id="get-video-src" class="src-button">Get Video</button>
+
+	<div id="audio-wave"></div>
+	<input id="audio-src" class="src-input"></input>
+	<button id="get-audio-src" class="src-button">Get Audio</button>
+
+	<select id="game-type">
+		<option value="basketball">Basketball</option>
+	</select>
+
+	<table id="label-table">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Cause Labels</th>
+				<th></th>
+				<th>Response Labels</th>
+				<th></th>
+				<th>Start Time</th>
+				<th></th>
+				<th>End Time</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr id="row0" class="table-row">
+				<td>
+					<button class="delete-row">Delete Row</button>
+				</td>
+				<td>Clock Start</td>
+				<td>
+					<select class="cause-labels">
+					</select>
+				</td>
+				<td></td>
+				<td>
+					<select class="response-labels">
+					</select>
+				</td>
+				<td>00:00:00</td>
+				<td>
+					<button class="get-start-time">Get Time</button>
+				</td>
+				<td>00:00:00</td>
+				<td>
+					<button class="get-end-time">Get Time</button>
+				</td>
+				<td>
+					<button class="add-row">Add Row</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+</html>
