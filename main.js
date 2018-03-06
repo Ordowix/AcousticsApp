@@ -7,13 +7,8 @@ $(document).ready(function() {
 		getAudioSrc();
 	});
 
-	setGameType();
 	$("#game-type").change(function() {
 		setGameType();
-	});
-
-	$(".delete-row").click(function() {
-		deleteRow();
 	});
 
 	$(".get-start-time").click(function() {
@@ -23,14 +18,18 @@ $(document).ready(function() {
 	$(".get-end-time").click(function() {
 		getEndTime();
 	});
+});
 
-	$(".cause-labels").change(function() {
-		updateCauseLabels();
-	});
-
-	$(".response-labels").change(function() {
-		updateResponseLabels();
-	});
+$(document).on("change", ".cause-labels", function() {
+	var row = $(this).parent().parent().attr("id");
+	var label = $(this).val();
+	updateCauseLabels(row, label);
+});
+	
+$(document).on("change", ".response-labels", function() {
+	var row = $(this).parent().parent().attr("id");
+	var label = $(this).val();
+	updateResponseLabels(row, label);
 });
 
 $(document).on("click", ".add-row", function() {
@@ -40,7 +39,16 @@ $(document).on("click", ".add-row", function() {
 	addRow(rowNum);
 });
 
+$(document).on("click", ".delete-row", function() {
+	var row = $(this).parent().parent().attr("id");
+	deleteRow(row);
+});
+
 function getVideoSrc() {
+	var src = $("#video-src").val();
+	var type = src.substring(src.lastIndexOf(".") + 1);
+	var html = "<source src='" + src + "' type='video/" + type + "'>";
+	$("#game-video").html(html);
 	console.log("Got Video");
 }
 
@@ -63,7 +71,7 @@ function getCauses() {
 		causes = ["1point", "2point", "3point", "foul", "PA"];
 	}
 
-	var c = "";
+	var c = "<option></option>";
 	for (var i = 0; i < causes.length; i++) {
 		c += "<option value='" + causes[i] + "'>" + causes[i] + "</option>";
 	}
@@ -76,7 +84,7 @@ function getResponses() {
 		responses = ["cheer", "chant", "applause", "boo", "noise", "ahh"];
 	}
 
-	var r = "";
+	var r = "<option></option>";
 	for (var i = 0; i < responses.length; i++) {
 		r += "<option value='" + responses[i] + "'>" + responses[i] + "</option>";
 	}
@@ -114,7 +122,8 @@ function incRow(row) {
 	$("#row" + row).attr("id", "row" + (row + 1));
 }
 
-function deleteRow() {
+function deleteRow(row) {
+	$("#" + row).remove();
 	console.log("Row Delted");
 }
 
@@ -126,10 +135,38 @@ function getEndTime() {
 	console.log("Got End Time");
 }
 
-function updateCauseLabels() {
+function updateCauseLabels(row, label) {
+	var html = $("#" + row + " td:nth-child(2)").html();
+	if (html == "") {
+		html = label;
+	}
+	else if(html.indexOf(label) == -1) {
+		html += ", " + label;
+	}
+	else {
+		html = html.replace(label + ", ", "");
+		html = html.replace(", " + label, "");
+		html = html.replace(label, "");
+	}
+	$("#" + row + " td:nth-child(2)").html(html);
+	$("#" + row + " .cause-labels").val(""); 
 	console.log("Updated Cause Labels");
 }
 
-function updateResponseLabels() {
+function updateResponseLabels(row, label) {
+	var html = $("#" + row + " td:nth-child(4)").html();
+	if (html == "") {
+		html = label;
+	}
+	else if(html.indexOf(label) == -1) {
+		html += ", " + label;
+	}
+	else {
+		html = html.replace(label + ", ", "");
+		html = html.replace(", " + label, "");
+		html = html.replace(label, "");
+	}
+	$("#" + row + " td:nth-child(4)").html(html);
+	$("#" + row + " .response-labels").val(""); 
 	console.log("Updated Response Labels");
 }
